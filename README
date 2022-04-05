@@ -11,6 +11,7 @@ pip install selenium
 pip install pandas
 pip install pyperclip
 pip install regex
+sudo apt-get install xsel (needed for pyperclip on Linux/Mac)
 
 (If there are any other dependencies required just install them)
 
