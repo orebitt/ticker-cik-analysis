@@ -1,0 +1,24 @@
+(Based on running python 3.8 on Linux, but any ver of python3 and Windows should follow roughly the same steps, I’ll highlight)
+
+Dependencies:
+
+Python3
+pip
+Open CMD/Terminal & install the following:
+
+python3 -m pip install -U cryptography
+pip install selenium
+pip install pandas
+pip install pyperclip
+pip install regex
+
+(If there are any other dependencies required just install them)
+
+For Linux:
+Download chromedriver and unzip it so you have the binary file
+
+In terminal, type: mkdir //usr/local/bin/chromedriver
+Then type,
+sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+
+You should be good to go!
