@@ -1,0 +1,2 @@
+1. D/L CSV's from the SEC site and title them CIK.txt (the CIK code.txt eg. 0000063908.txt for McDonalds). Benefits are its not required to do any regex
+   or manual insertion, just modify the csv afterwards

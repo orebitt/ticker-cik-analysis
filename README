@@ -22,3 +22,7 @@ Then type,
 sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
 
 You should be good to go!
+
+To run:
+python3 main.py
+enter CIK codes separated by a comma
