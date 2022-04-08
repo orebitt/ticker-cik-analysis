@@ -68,7 +68,7 @@ for company in companies:
 
     df = df.split("\n")
     
-    print(df[0])
+    #print(df[0])
     
     df = pd.DataFrame([row.split(",") for row in df])
     df.columns = ['form_type_description',

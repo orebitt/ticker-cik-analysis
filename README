@@ -25,5 +25,6 @@ sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
 You should be good to go!
 
 To run:
-python3 main.py
-enter CIK codes separated by a comma
+Make sure companies.txt is in the same folder as main.py
+Add your company CIK codes, one per line as seen in the example file.
+In a terminal/cmd window (make sure it's running in the same directory as main.py), run the command: python3 main.py
