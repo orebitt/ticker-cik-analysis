@@ -9,13 +9,11 @@ import regex
 
 #sample CIK codes to paste into the input window
 #0000063908, 0000320193, 0000038009
+start_time = time.time()
 
-print("PLease enter the CIK Number or Ticker of every company you would like to search, separated by commas")
-companies = input('>')
-companies = companies.replace(" ", "")
-companies = companies.split(",")
-print("retrieving files")
-
+companies_raw = open('companies.txt', 'r')
+companies = companies_raw.readlines()
+print(companies)
 driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver/chromedriver")
 driver.implicitly_wait(1)
 
@@ -28,6 +26,9 @@ filing_records = pd.DataFrame(columns=['form_type_description',
                                        'company_cik'])
 
 for company in companies:
+
+    company = company.strip()
+
     driver.get(url)
 
     driver.find_element(By.XPATH, "//input[@id='company']").send_keys(company)
@@ -52,6 +53,7 @@ for company in companies:
     driver.find_element(By.XPATH, "//span[normalize-space()='Copy to clipboard']").click()
 
     df = pyperclip.paste()
+    #print(df[0])
     df = regex.sub(",", "", df)
     df = df.replace("EDGAR Entity Landing Page", "")
     df = regex.sub("Form type\s*Form description\s*Filing date\s*Reporting date\s*Filings URL",
@@ -65,6 +67,9 @@ for company in companies:
     df = regex.sub("(?<=[0-9]),\s,(?=h)", ",", df)
 
     df = df.split("\n")
+    
+    print(df[0])
+    
     df = pd.DataFrame([row.split(",") for row in df])
     df.columns = ['form_type_description',
                   'filing_date',
@@ -76,6 +81,8 @@ for company in companies:
     filing_records = pd.concat([filing_records, df])
 
 filing_records.to_csv("posts/filings.csv")
+end = time.time()
+print("--- %s seconds ---" % (time.time() - start_time))
 
 #### alternate code to just download a csv for each company (downside: many csv's)
 # for company in companies:
