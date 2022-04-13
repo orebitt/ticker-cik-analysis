@@ -45,7 +45,7 @@ for names in range(len(matcher_set)):
 #print(set_of_names, "NAMES")
 #print(matcher_set, "SET")
 
-time.sleep(2)
+#time.sleep(2)
 
 #Remove duplicates & makes it faster to access
 set_of_names = set(set_of_names)	
@@ -61,20 +61,35 @@ for item in matcher_set:
 	#print(item)
 	if(len(item) > 1):
 		d[item[0]] = item[1]
-print(d.keys())
+#print(d.keys())
 
+
+file = open("temp_dict","w")
+counter = 0
 for names in set_of_names:
+	l = []
 	for k, v in d.items():
 		if(not(isinstance(names, float))):
 			if(names.lower()) in k.lower():
-				print(names, "---", k.lower())
+				l.append([names, k.lower(), v])
 			else:
 				#print(names, "was not found") 
 				pass
+	if(len(l) > 0):
+		for fax in l:
+			#print(fax)
+			file.write("[")
+			file.write(" - ".join(fax))
+			file.write("] ")
+		file.write("\n")
+	counter += 1
+	if(counter % 100 == 0):
+		t2 = time.time()
+		print(counter/len(set_of_names) * 100, "% Complete --- Time Elapsed:", t2-t0, "seconds  --- " ,counter/(t2-t0), "requests/sec")
 		
-file = open("temp_dict","w")
-for key, value in d.items(): 
-	file.write('%s:%s\n' % (key, value))
+#file = open("temp_dict","w")
+#for key, value in d.items(): 
+#	file.write('%s:%s\n' % (key, value))
 file.close()
 
 t1 = time.time()
