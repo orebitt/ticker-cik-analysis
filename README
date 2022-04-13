@@ -28,3 +28,15 @@ To run:
 Make sure companies.txt is in the same folder as main.py
 Add your company CIK codes, one per line as seen in the example file.
 In a terminal/cmd window (make sure it's running in the same directory as main.py), run the command: python3 main.py
+
+EXTRAS
+----------
+CIK Finder:
+
+Dependencies:
+pip uninstall urllib3
+pip install urllib3==1.22
+
+
+
+
