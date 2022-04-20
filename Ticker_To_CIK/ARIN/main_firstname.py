@@ -30,8 +30,10 @@ temp_list_address = []
 
 cur_orgID = ""
 cur_org = ""
+first_name = ""
 cur_street = ""
 cur_city = ""
+cur_postal = ""
 
 with open('arin_db.txt','r') as data_file:
 	for line in data_file:
@@ -43,16 +45,21 @@ with open('arin_db.txt','r') as data_file:
 
 			if d == "OrgID":
 				cur_orgID = (data[1].strip())
-			if d == "OrgName":
+			elif d == "OrgName":
 				d_first = data[1].strip()
 				d_first = list(filter(None, data[1].split(" ")))
 				#print(d_first[0].strip(), ": D First")
-				cur_org = (d_first[0].strip())
-			if d == "Street":
+				first_name = (d_first[0].strip())
+				cur_org = (data[1].strip())
+			elif d == "Street":
 				cur_street = (data[1].strip())
-			if d == "City":
+			elif d == "PostalCode":
+				cur_postal = (data[1].strip())
+			elif d == "City":
 				cur_city = (data[1].strip())		
-				name_dict[cur_street] = [cur_orgID, cur_org, cur_city]
+				name_dict[first_name] = [cur_org, cur_orgID, cur_street, cur_city, cur_postal]
+
+				
 	
 
 #ADD LATER, SAVED DICT PKL DUMPS (not compatible w/ for loop below becuase keyerrors, need to fix)
@@ -63,14 +70,35 @@ with open('arin_db.txt','r') as data_file:
 #with open('name_dict.pkl', 'rb') as f:
 #    loaded_dict = pickle.load(f)
 
+temp_d = {}
 
 for i in range(len(set_of_names['sp_entity_name'])):
 	if(not isinstance(set_of_names['sp_entity_name'][i], float)):
 		names_first = (set_of_names['sp_entity_name'][i].strip().split(" "))
 		#print(names_first[0].strip())
 		if(names_first[0].strip() in name_dict.keys()):
-			print(names_first, " : ", name_dict[names_first[0]], " FOUND")
+			print(names_first, " FOUND : ", name_dict[names_first[0]], set_of_names['sp_zip'][i])
+			if(set_of_names['sp_entity_name'][i].strip() not in temp_d.keys()):
+				temp_d[set_of_names['sp_entity_name'][i].strip()] = [name_dict[names_first[0]], set_of_names['sp_zip'][i]]
 		else:
 			#print("Nope: ", names_first[0].strip())
 			pass
+			
+f = open("output.txt", "w")
+l = []
+for k, v in temp_d.items():
+	l.append("".join(k))
+	l.append("->")
+	for x in v:
+		print(x)
+		print(v)
+		if(not isinstance(x, list)):
+			l.append(str(x))
+		else:
+			l.append(" ".join(x))
+			l.append(", ")
 
+	f.write(str(l))
+	f.write("\n")
+	l = []
+f.close()
