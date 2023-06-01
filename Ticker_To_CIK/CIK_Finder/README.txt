@@ -1,0 +1,1 @@
+Gets CIK information from ticker.
